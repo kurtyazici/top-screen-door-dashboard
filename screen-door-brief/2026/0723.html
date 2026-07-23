@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Screen Door Content</title>
+<style>
+  :root{
+    --teal:#0e7c7b; --bg:#f7f9fa; --card:#ffffff; --text:#25333f; --muted:#7a8a96;
+    --line:#e5ebee; --heading:#17324d;
+  }
+  html[data-theme="dark"]{
+    --teal:#45c9c6; --bg:#0f1620; --card:#1a2330; --text:#e8eef4; --muted:#9fb0be;
+    --line:#2a3545; --heading:#f2f6fa;
+  }
+  #mode{position:fixed;top:12px;right:12px;z-index:50;width:34px;height:34px;border-radius:50%;
+    border:1px solid rgba(127,127,127,.4);background:var(--card);cursor:pointer;font-size:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);line-height:1}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+  .wrap{max-width:980px;margin:0 auto;padding:24px 20px 50px}
+  .kicker{text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--muted)}
+  .bar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+  h1{font-size:26px;font-weight:800;color:var(--heading);margin-top:2px}
+  .subline{font-size:12px;color:var(--muted);margin-top:2px}
+  .spacer{flex:1}
+  .toggle{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+  .toggle button{border:0;background:transparent;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .toggle button.on{background:#0e7c7b;color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:420px){.grid{grid-template-columns:1fr}}
+  a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--text);transition:transform .12s}
+  a.card:hover{transform:translateY(-2px)}
+  .thumb{position:relative;aspect-ratio:3/4;background:linear-gradient(135deg,#17324d,#0e7c7b);display:flex;align-items:center;justify-content:center}
+  .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .thumb .ph{color:#fff;opacity:.5;font-size:30px}
+  .thumb .rank{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px;z-index:2}
+  .thumb .ptag{position:absolute;bottom:8px;left:8px;right:8px;background:rgba(0,0,0,.55);color:#fff;font-size:10px;font-weight:600;border-radius:6px;padding:2px 7px;z-index:2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cardbody{padding:8px 10px}
+  .nums{display:flex;justify-content:space-between;align-items:baseline}
+  .rev{font-size:15px;font-weight:800;color:var(--teal)}
+  .views{font-size:12px;color:var(--muted)}
+  .who{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .empty{grid-column:1/-1;text-align:center;color:var(--muted);font-size:13px;padding:30px 0}
+  .foot{font-size:11px;color:var(--muted);margin-top:14px}
+</style>
+</head>
+<body>
+<button id="mode" title="Toggle light/dark mode">🌙</button>
+<div class="wrap">
+  <div class="bar">
+    <div>
+      <div class="kicker">Kalo Data Brief · Updated July 23, 2026</div>
+      <h1>Top Screen Door Content</h1>
+      <div class="subline">Top magnetic screen door products incl. Flux Phenom · videos over $100 revenue · <span id="count"></span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="toggle">
+      <button id="b1" onclick="setRange(1)">Yesterday</button>
+      <button id="b7" onclick="setRange(7)">7 Days</button>
+      <button id="b30" class="on" onclick="setRange(30)">30 Days</button>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="foot">Source: Kalodata · TikTok Shop US · Tap a video to watch on TikTok · Revenue/views are per selected window</div>
+</div>
+
+<script>
+const D = window.__D = [["7652687349758872845","Self-Seal Pro","06/18/26",3490,"359k",1190,"98.6k",128,"8.7k"],["7653627077999987998","Mesh Self-Seal","06/20/26",3400,"23.6k",485,"1.8k",0,""],["7616061703888850206","Hands-Free Mesh","03/11/26",2510,"94.5k",914,"33.5k",0,""],["7636522257753427231","Hands-Free Mesh","05/05/26",2390,"93.4k",300,"11.5k",0,""],["7655899706228362510","Self-Seal Pro","06/27/26",1600,"128.6k",313,"25.2k",0,""],["7656561301761576205","Flux Phenom","06/28/26",1350,"20.3k",0,"",0,""],["7639566831849639198","Self-Seal Pro","05/13/26",1180,"78.5k",205,"13.7k",0,""],["7648844540362673438","Mesh Self-Seal","06/07/26",1060,"4.7k",0,"",0,""],["7662535458450083103","Flux Phenom","07/14/26",930,"26.2k",800,"22.9k",0,""],["7647947633587260686","Mesh Self-Seal","06/05/26",906,"4.7k",0,"",0,""],["7655111709945810190","Flux Phenom","06/24/26",728,"17.3k",0,"",0,""],["7644955298028850463","Self-Seal Easy","05/28/26",717,"15k",0,"",0,""],["7615400035559247134","Hands-Free Mesh","03/09/26",694,"25.3k",212,"7.8k",0,""],["7640202429102853407","Self-Seal Pro","05/15/26",679,"46.6k",238,"18.3k",0,""],["7653550111280123166","Pure Garden","06/20/26",599,"3.7k",0,"",0,""],["7662513958426889503","Flux Phenom","07/14/26",585,"18.1k",507,"16.1k",0,""],["7631400060940487950","Self-Seal Pro","04/21/26",567,"42.8k",0,"",0,""],["7545465322170518797","Self-Seal Easy","09/02/25",516,"35.5k",0,"",0,""],["7657268363021864205","Pure Garden","07/01/26",516,"11.6k",0,"",0,""],["7616742721788595486","Self-Seal Pro","03/13/26",510,"38.5k",0,"",0,""],["7641379622705188127","Hands-Free Mesh","05/18/26",500,"15.2k",123,"3.4k",0,""],["7664433609373125918","Flux Phenom","07/19/26",468,"11.9k",468,"11.9k",0,""],["7659995271023086878","Flux Phenom","07/07/26",468,"6.5k",0,"",0,""],["7513405160903724318","Self-Seal Easy","06/07/25",440,"7.4k",0,"",0,""],["7659616412398406925","Pure Garden","07/06/26",418,"12.3k",0,"",0,""],["7663324250480200990","Flux Phenom","07/16/26",416,"15.6k",416,"15.6k",0,""],["7634339639737814302","Hands-Free Mesh","04/30/26",413,"15.6k",0,"",0,""],["7615076312364993822","Self-Seal Pro","03/08/26",388,"24.7k",110,"7k",0,""],["7662978374175837470","Flux Phenom","07/16/26",382,"13.3k",382,"13.3k",0,""],["7663628626226613517","Pure Garden","07/17/26",379,"30.5k",379,"30.5k",0,""],["7662203597765070111","Flux Phenom","07/13/26",364,"16.8k",104,"3k",0,""],["7655474921002306846","Pure Garden","06/25/26",334,"3.2k",0,"",0,""],["7654558902553447694","Self-Seal Fresh","06/23/26",306,"1.4k",0,"",0,""],["7657389971883494669","Flux Phenom","06/30/26",286,"3.4k",0,"",0,""],["7658354500515712286","Mesh Self-Seal","07/03/26",283,"2.4k",0,"",0,""],["7656615748491693326","Pure Garden","06/28/26",242,"3.7k",0,"",0,""],["7655191839196171534","Mesh Self-Seal","06/25/26",203,"832",0,"",0,""],["7658463287830416671","Hands-Free Mesh","07/03/26",203,"9.5k",0,"",0,""],["7630087062057733407","Self-Seal Kit","04/18/26",191,"7.8k",0,"",0,""],["7654230597581180174","Hands-Free Mesh","06/22/26",187,"6.6k",0,"",0,""],["7613568522127428895","Self-Seal Pro","03/04/26",177,"11.2k",0,"",0,""],["7663651347148885278","Hands-Free Mesh","07/17/26",172,"5.5k",172,"5.5k",0,""],["7657917341136735501","Self-Seal Fresh","07/02/26",172,"1.3k",0,"",0,""],["7654780518910709022","Hands-Free Mesh","06/23/26",155,"4.9k",0,"",0,""],["7660382882388593951","Self-Seal Fresh","07/09/26",131,"646",0,"",0,""],["7662333561604803854","Self-Seal Fresh","07/14/26",121,"3.2k",108,"2.4k",0,""],["7657918092986699021","Self-Seal Fresh","07/02/26",112,"690",0,"",0,""]];
+const fmt = r => r >= 1000 ? '$' + (r/1000).toFixed(2).replace(/\.?0+$/,'') + 'k' : '$' + r.toFixed(0);
+const meta = {};
+function setRange(n){
+  ['b1','b7','b30'].forEach(id=>document.getElementById(id).classList.remove('on'));
+  document.getElementById(n===1?'b1':n===7?'b7':'b30').classList.add('on');
+  const o = n===1 ? 7 : n===7 ? 5 : 3;
+  const list = D.filter(v=>v[o]>100).sort((a,b)=>b[o]-a[o]);
+  document.getElementById('count').textContent = list.length + ' videos';
+  document.getElementById('grid').innerHTML = list.length ? list.map((v,i)=>`
+    <a class="card" id="c_${v[0]}" href="https://www.tiktok.com/@i/video/${v[0]}" target="_blank">
+      <div class="thumb"><span class="ph">▶</span><span class="rank">#${i+1}</span><span class="ptag">${v[1]}</span></div>
+      <div class="cardbody">
+        <div class="nums"><span class="rev">${fmt(v[o])}</span><span class="views">${v[o+1]}${v[o+1]?' views':''}</span></div>
+        <div class="who" id="w_${v[0]}">${v[2]}</div>
+      </div>
+    </a>`).join('') : '<div class="empty">No videos over $100 revenue in this window.</div>';
+  list.forEach(v=>hydrate(v[0], v[2]));
+}
+function applyMeta(id, pub){
+  const m = meta[id]; if(!m) return;
+  const card = document.getElementById('c_'+id);
+  if(!card) return;
+  if(m.url) card.href = m.url;
+  const th = card.querySelector('.thumb');
+  if(m.thumb && !th.querySelector('img')){ const img=new Image(); img.onload=()=>th.prepend(img); img.src=m.thumb; }
+  if(m.handle) document.getElementById('w_'+id).textContent = m.handle + ' · ' + pub;
+}
+function hydrate(id, pub){
+  if(meta[id]){ applyMeta(id, pub); return; }
+  fetch('https://www.tiktok.com/oembed?url=' + encodeURIComponent('https://www.tiktok.com/@i/video/' + id))
+    .then(r=>r.json())
+    .then(j=>{
+      const handle = (j.author_url||'').split('/@')[1] ? '@'+j.author_url.split('/@')[1] : '';
+      meta[id] = {thumb: j.thumbnail_url||'', handle, url: j.author_url ? j.author_url + '/video/' + id : ''};
+      applyMeta(id, pub);
+    }).catch(()=>{ meta[id] = {}; });
+}
+setRange(30);
+const mBtn = document.getElementById('mode');
+function applyMode(m){
+  document.documentElement.dataset.theme = m;
+  mBtn.textContent = m === 'dark' ? '☀️' : '🌙';
+  try{ localStorage.setItem('kalo-theme', m); }catch(e){}
+}
+mBtn.onclick = () => applyMode(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+let saved = 'light'; try{ saved = localStorage.getItem('kalo-theme') || 'light'; }catch(e){}
+applyMode(saved);
+</script>
+<script>(function(){
+window.__RISING_SINCE = "2026-07-16";
+window.__PREV_RISING = ["7664433609373125918","7663324250480200990","7662978374175837470","7663628626226613517","7663651347148885278"];
+function pd(s){var p=s.split("/");return new Date(2000+ +p[2], +p[0]-1, +p[1]);}
+function fmt(n){if(n<1000)return ""+n;var s=(n/1000).toFixed(2);while(s.indexOf(".")>-1&&(s.charAt(s.length-1)==="0"||s.charAt(s.length-1)==="."))s=s.slice(0,-1);return s+"k";}
+var bar=document.querySelector(".toggle");
+var rb=document.createElement("button"); rb.id="risingBtn"; rb.textContent="Rising";
+rb.onclick=function(){window.setRange("rising");};
+if(bar) bar.appendChild(rb);
+var _orig=window.setRange;
+window.setRange=function(x){ if(x==="rising"){ if(bar) bar.querySelectorAll("button").forEach(function(b){b.classList.remove("on");}); rb.classList.add("on"); return showRising(); } rb.classList.remove("on"); return _orig(x); };
+function showRising(){
+var sc=new Date(window.__RISING_SINCE+"T00:00:00"); var prev=window.__PREV_RISING||[];
+var list=(window.__D||[]).filter(function(v){return v[3]>100 && pd(v[2])>=sc;});
+list.sort(function(a,b){return pd(b[2])-pd(a[2]) || b[3]-a[3];});
+document.getElementById("count").textContent=list.length+" rising";
+document.getElementById("grid").innerHTML = list.length ? list.map(function(v){
+var pin = prev.indexOf(v[0])===-1;
+var h="<a class=\"card\" id=\"c_"+v[0]+"\" href=\"https://www.tiktok.com/@i/video/"+v[0]+"\" target=\"_blank\">";
+h+="<div class=\"thumb\"><span class=\"ph\">\u25B6</span>"+(pin?"<span class=\"rank\">\uD83D\uDCCC</span>":"")+"<span class=\"ptag\">"+v[1]+"</span></div>";
+h+="<div class=\"cardbody\"><div class=\"nums\"><span class=\"rev\">$"+fmt(v[3])+"</span><span class=\"views\">"+v[4]+" views</span></div>";
+h+="<div class=\"who\" id=\"w_"+v[0]+"\">"+v[2]+"</div></div></a>";
+return h;
+}).join("") : "<div class=\"empty\">No rising videos in the last 7 days.</div>";
+if(window.hydrate) list.forEach(function(v){window.hydrate(v[0], v[2]);});
+}
+window.showRising=showRising;
+})();</script>
+
+<script>/*AUTO-HIDE-EMPTY-YESTERDAY*/(function(){function h(){try{var D=window.__D||[];var y=D.filter(function(r){return (+r[7])>100;}).length;var s7=D.filter(function(r){return (+r[5])>100;}).length;var b=document.getElementById('b1');if(!b)return;if(y<4){b.style.display='none';if(b.classList.contains('on')&&typeof setRange==='function')setRange(s7>0?7:30);}else{b.style.display='';}}catch(e){}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',h);else h();setTimeout(h,0);})();</script>
+</body>
+</html>
